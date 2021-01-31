@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import SearchComponent from "./SearchComponent";
 
 const keyApi = '5c2e7db91be800dca337ae2f4990971f';
-const lat = 49.8383;
-const lon = 24.0232;
 
 const instance = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5'
 });
 
-export const getWeather = async () => {
+export const getWeather = async ({lat, lng}) => {
 
   /*
     const res = await instance.get(`/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${keyApi}`);
@@ -18,7 +17,7 @@ export const getWeather = async () => {
   const res = await instance.get(`/onecall`, {
     params: {
       lat: lat,
-      lon: lon,
+      lon: lng,
       exclude: ["hourly", "alerts"],
       units: "metric",
       appid: keyApi
@@ -52,20 +51,24 @@ const Weather = () => {
     todayWeather: 0
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getWeather();
-      setWeather(result);
-    };
-    fetchData();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await getWeather();
+  //     setWeather(result);
+  //   };
+  //   fetchData();
+  // }, []);
 
-  }, []);
+  const handleSearch = async ({city, lng, lat}) => {
+console.log('a', city, lng, lat);
+    const result = await getWeather({lng, lat});
+    setWeather(result);
+  };
 
-  useEffect(() => {
-    console.log(weather)
-  }, [weather])
   return (
     <div>
+      <SearchComponent handleSearch={handleSearch}/>
+
       <div>
         <h1>Lviv, UA</h1>
         <h2>Time</h2>

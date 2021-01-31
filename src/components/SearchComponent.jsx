@@ -1,16 +1,33 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import './SearchComponent.css';
+import Geocode from "react-geocode";
 
-const SearchComponent = () => {
+Geocode.setApiKey("AIzaSyCGzMDw4iq6loLNXllX9mIHyQdlP1kz-pg");
 
-const handlerSearch = (e) => {
-  console.log('atata');
-}
+const SearchComponent = ({handleSearch}) => {
+  const ref = useRef(null);
+
+  const handlerSubmit = async (e) => {
+    e.preventDefault();
+
+    const city = ref.current.value;
+    Geocode.fromAddress(city).then(
+      response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        handleSearch({city, lat, lng});
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
+  }
+
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={handlerSubmit}>
       <div className="input_wrapper">
-        <input type="text" placeholder="Search contact" onKeyUp={handlerSearch}/>
+        <input type="text" placeholder="Search contact" ref={ref}/>
       </div>
     </form>
   )
