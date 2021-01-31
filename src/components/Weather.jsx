@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import SearchComponent from "./SearchComponent";
+import Geocode from "react-geocode";
 
 const keyApi = '5c2e7db91be800dca337ae2f4990971f';
 
@@ -39,7 +40,11 @@ export const getWeather = async ({lat, lng}) => {
 }
 
 
+
+
+
 const Weather = () => {
+  const [city, setCity] = useState(null);
   const [weather, setWeather] = useState({
     currentTemp: 0,
     tMax: 0,
@@ -51,18 +56,12 @@ const Weather = () => {
     todayWeather: 0
   });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await getWeather();
-  //     setWeather(result);
-  //   };
-  //   fetchData();
-  // }, []);
+
 
   const handleSearch = async ({city, lng, lat}) => {
-console.log('a', city, lng, lat);
     const result = await getWeather({lng, lat});
     setWeather(result);
+    setCity(city);
   };
 
   return (
@@ -70,7 +69,7 @@ console.log('a', city, lng, lat);
       <SearchComponent handleSearch={handleSearch}/>
 
       <div>
-        <h1>Lviv, UA</h1>
+        <h1>{city}</h1>
         <h2>Time</h2>
       </div>
       <div>Temperature now: {weather.currentTemp}</div>

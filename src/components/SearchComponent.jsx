@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import './SearchComponent.css';
 import Geocode from "react-geocode";
 
@@ -8,12 +8,13 @@ const SearchComponent = ({handleSearch}) => {
   const ref = useRef(null);
 
   const handlerSubmit = async (e) => {
-    e.preventDefault();
-
+    if (e) {
+      e.preventDefault();
+    }
     const city = ref.current.value;
     Geocode.fromAddress(city).then(
       response => {
-        const { lat, lng } = response.results[0].geometry.location;
+        const {lat, lng} = response.results[0].geometry.location;
         handleSearch({city, lat, lng});
       },
       error => {
@@ -22,6 +23,24 @@ const SearchComponent = ({handleSearch}) => {
     );
 
   }
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        Geocode.fromLatLng(pos.lat, pos.lng).then(
+          response => {
+            const address = response.results[0].address_components[3].short_name;
+            ref.current.value = address;
+            handlerSubmit(null);
+          }
+        );
+      }
+    );
+  }, [])
 
 
   return (
