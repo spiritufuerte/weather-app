@@ -28,7 +28,7 @@ const SearchComponent = ({handleSearch}) => {
   return (
     <form className="form" onSubmit={handlerSubmit}>
       <div className="input_wrapper">
-        <input type="text" placeholder="Search contact" ref={ref}/>
+        <input type="text" placeholder="Search location" ref={ref}/>
       </div>
     </form>
   )

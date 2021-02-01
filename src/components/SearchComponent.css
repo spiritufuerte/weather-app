@@ -1,26 +1,37 @@
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+
 .form {
-  width: 250px;
-  margin: 20px auto;
+    width: 300px;
+    margin: 100px auto;
 }
 
 .input_wrapper {
-  position: relative;
+    position: relative;
 }
 
 .input_wrapper:before {
-  position: absolute;
-  top: 7px;
-  bottom: 0;
-  right: 0;
-  margin: auto 0;
-  content: "\f002";
-  font-family: FontAwesome;
-  font-size: 16px;
-  color: rgb(187, 187, 187);
+    bottom: 0;
+    margin: auto 0;
+    font-family: "Font Awesome\ 5 Free";
+    content: "\f002";
+    font-weight: 600;
+    color: rgb(75,173,233);
+    right: 0;
+    top: 12px;
+    padding: 0;
+    position: absolute;
+    pointer-events: none;
 }
 
-input {
-  width: 250px;
-  height: 25px;
+input[type=text] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 300px;
+    height: 36px;
+    border-radius: 20px;
+    border-color: white;
+    outline: none;
+    padding-left: 20px;
 }
 
