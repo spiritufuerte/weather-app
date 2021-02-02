@@ -7,8 +7,8 @@ const Weather = () => {
   const [city, setCity] = useState(null);
   const [weather, setWeather] = useState({
     currentTemp: 0,
-    tMax: 0,
-    tMin: 0,
+    tMax: null,
+    tMin: null,
     currentSunset: new Date(),
     currentSunrise: new Date(),
     currentClouds: 0,
@@ -39,24 +39,30 @@ const Weather = () => {
   let date = formatDate(new Date());
   let src = `http://openweathermap.org/img/wn/${weather.weatherIcon}@2x.png`;
 
+
   return (
     <div className={classes.main}>
       <SearchComponent handleSearch={handleSearch}/>
       <div className={classes.info}>
-        <div className={classes.location}>
-          <h1>{city}</h1>
-          <h2>{date}</h2>
-          <img src={src}/>
-          <p>Weather condition: {weather.weatherDescription}</p>
-        </div>
-        <div className={classes.weather_wrapper}>
-          <p>Temperature now: {weather.currentTemp} °C</p>
-          <p>Min temperature today: {weather.tMin} °C</p>
-          <p>Max temperature today: {weather.tMax} °C</p>
-          <p>Sunset: {weather.currentSunset.getHours()}:{weather.currentSunset.getMinutes()}</p>
-          <p>Sunrise: {weather.currentSunrise.getHours()}:{weather.currentSunrise.getMinutes()}</p>
-          <p>Clouds: {weather.currentClouds}%</p>
-        </div>
+        {weather.tMax ?
+          <React.Fragment>
+            <div className={classes.location}>
+              <h1>{city}</h1>
+              <h2>{date}</h2>
+              <img src={src}/>
+              <p>Weather condition: {weather.weatherDescription}</p>
+            </div>
+            <div className={classes.weather_wrapper}>
+              <p>Temperature now: {weather.currentTemp} °C</p>
+              <p>Min temperature today: {weather.tMin} °C</p>
+              <p>Max temperature today: {weather.tMax} °C</p>
+              <p>Sunset: {weather.currentSunset.getHours()}:{weather.currentSunset.getMinutes()}</p>
+              <p>Sunrise: {weather.currentSunrise.getHours()}:{weather.currentSunrise.getMinutes()}</p>
+              <p>Clouds: {weather.currentClouds}%</p>
+            </div>
+          </React.Fragment>
+          : <h1> Wait</h1>
+        }
       </div>
     </div>
   );
