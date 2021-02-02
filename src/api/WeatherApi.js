@@ -7,13 +7,15 @@ const instance = axios.create({
 });
 
 export const getWeather = async ({lat, lng}) => {
+  const key = `weather/${lat},${lng}`;
 
- /* const localWeatherData = localStorage.getItem(city);
-  if (!localWeatherData) {
-
-  } else {
-    return localWeatherData;
-  }*/
+  const weather = localStorage.getItem(key);
+  if (weather) {
+    const values = JSON.parse(weather);
+    values.currentSunrise = new Date(values.currentSunrise);
+    values.currentSunset = new Date(values.currentSunset);
+    return values;
+  }
 
   const res = await instance.get(`/onecall`, {
     params: {
@@ -29,8 +31,7 @@ export const getWeather = async ({lat, lng}) => {
   const weatherIcon = currentData.weather[0].icon;
   const weatherDescription = currentData.weather[0].description;
 
-
-  return {
+  const values = {
     currentClouds: currentData.clouds,
     currentSunrise: new Date(currentData.sunrise * 1000),
     currentSunset: new Date(currentData.sunset * 1000),
@@ -40,4 +41,8 @@ export const getWeather = async ({lat, lng}) => {
     weatherDescription,
     weatherIcon
   };
+
+  localStorage.setItem(key, JSON.stringify(values));
+
+  return values;
 }
