@@ -7,6 +7,14 @@ const instance = axios.create({
 });
 
 export const getWeather = async ({lat, lng}) => {
+
+ /* const localWeatherData = localStorage.getItem(city);
+  if (!localWeatherData) {
+
+  } else {
+    return localWeatherData;
+  }*/
+
   const res = await instance.get(`/onecall`, {
     params: {
       lat: lat,

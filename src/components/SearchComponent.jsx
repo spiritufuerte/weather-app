@@ -12,7 +12,6 @@ const SearchComponent = ({handleSearch}) => {
     const city = ref.current.value;
     const {lat, lng} = await getCoordinatesByCity(city);
     handleSearch({city, lat, lng});
-
   }
 
   useEffect(() => {
@@ -22,8 +21,7 @@ const SearchComponent = ({handleSearch}) => {
         await handlerSubmit(null);
       }
     );
-  }, [])
-
+  }, []);
 
   return (
     <form className="form" onSubmit={handlerSubmit}>
