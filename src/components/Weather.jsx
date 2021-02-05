@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import SearchComponent from "./SearchComponent";
 import {getWeather} from "../api/WeatherApi";
-import classes from './Weather.module.scss';
+import classes from './Weather.module.css';
 
 const Weather = () => {
   const [city, setCity] = useState(null);
@@ -39,7 +39,6 @@ const Weather = () => {
   let date = formatDate(new Date());
   let src = `http://openweathermap.org/img/wn/${weather.weatherIcon}@2x.png`;
 
-
   return (
     <div className={classes.main}>
       <SearchComponent handleSearch={handleSearch}/>
@@ -49,7 +48,7 @@ const Weather = () => {
             <div className={classes.location}>
               <h1>{city}</h1>
               <h2>{date}</h2>
-              <img src={src}/>
+              <img src={src} alt="condition"/>
               <p>Weather condition: {weather.weatherDescription}</p>
             </div>
             <div className={classes.weather_wrapper}>
